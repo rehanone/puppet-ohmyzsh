@@ -25,12 +25,12 @@ define ohmyzsh::theme(
   $theme = 'clean',
 ) {
 
-  include ohmyzsh::params
+  include ohmyzsh
 
   if $name == 'root' {
     $home = '/root'
   } else {
-    $home = "${ohmyzsh::params::home}/${name}"
+    $home = "${ohmyzsh::home}/${name}"
   }
 
   file_line { "${name}-${theme}-install":

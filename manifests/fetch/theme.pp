@@ -1,5 +1,4 @@
 define ohmyzsh::fetch::theme (
-  $filename,
   $url = 'UNSET',
   $source = 'UNSET',
   $content = 'UNSET',
@@ -8,10 +7,12 @@ define ohmyzsh::fetch::theme (
 
   validate_string($filename, $url, $source, $content, $filename)
 
+  include ohmyzsh
+
   if $name == 'root' {
     $home = '/root'
   } else {
-    $home = "/home/${name}"
+    $home = "${ohmyzsh::home}/${name}"
   }
 
   $themepath = "${home}/.oh-my-zsh/custom/themes"

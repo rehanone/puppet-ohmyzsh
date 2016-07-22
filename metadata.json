@@ -10,6 +10,7 @@
   "description": "Install and configure the best shell, oh-my-zsh. This was originally a fork of acme/ohmyzsh.",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 3.2.0"},
+    {"name":"puppetlabs/vcsrepo","version_requirement":">= 1.3.2"},
     {"name":"maestrodev/wget","version_requirement":">= 1.5.7"}
   ],
   "operatingsystem_support": [

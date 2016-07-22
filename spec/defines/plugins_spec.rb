@@ -1,13 +1,17 @@
 require 'spec_helper'
 
 testcases = {
-  'user1' => {
+  'user_default' => {
     params: { },
-    expect: { home: '/home/user1', plugins:'git' }
+    expect: { home: '/home/user_default', plugins:'git' }
   },
-  'user2' => {
-    params: { plugins: 'tmux' },
-    expect: { home: '/home/user2', plugins: 'tmux' }
+  'user_with_plugins' => {
+    params: { plugins: ['tmux'] },
+    expect: { home: '/home/user_with_plugins', plugins: 'tmux' }
+  },
+  'user_with_custom_plugins' => {
+    params: { plugins: ['scala'], custom_plugins: { 'zsh-autosuggestions' => 'https://github.com/zsh-users/zsh-autosuggestions.git' } },
+    expect: { home: '/home/user_with_custom_plugins', plugins: 'scala zsh-autosuggestions' }
   },
   'root' => {
     params: { plugins: ['git', 'tmux'] },

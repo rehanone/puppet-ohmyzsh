@@ -3,15 +3,15 @@ require 'spec_helper'
 testcases = {
   'user1' => {
     params: { },
-    expect: { home: '/home/user1', sh: false }
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user1', sh: false }
   },
   'user2' => {
     params: { set_sh: true, disable_auto_update: true },
-    expect: { home: '/home/user2', sh: true, disable_auto_update: true }
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user2', sh: true, disable_auto_update: true }
   },
   'root' => {
     params: { },
-    expect: { home: '/root', sh: false }
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/root', sh: false }
   },
 }
 
@@ -21,10 +21,10 @@ describe 'ohmyzsh::install' do
       let(:title) { user }
       let(:params) { values[:params] }
       it do
-        should contain_exec("ohmyzsh::git clone #{user}")
-          .with_creates("#{values[:expect][:home]}/.oh-my-zsh")
-          .with_command("git clone https://github.com/robbyrussell/oh-my-zsh.git #{values[:expect][:home]}/.oh-my-zsh || (rmdir #{values[:expect][:home]}/.oh-my-zsh && exit 1)")
-          .with_user(user)
+        should contain_vcsrepo("#{values[:expect][:home]}/.oh-my-zsh")
+          .with_provider("git")
+          .with_source("#{values[:expect][:source]}")
+          .with_revision("master")
       end
       it do
         should contain_exec("ohmyzsh::cp .zshrc #{user}")
