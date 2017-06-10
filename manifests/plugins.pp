@@ -22,23 +22,36 @@
 # Copyright 2014
 #
 define ohmyzsh::plugins(
-  $plugins = 'git',
+  $plugins = ['git'],
+  $custom_plugins = {},
 ) {
 
-  include ohmyzsh::params
+  validate_array($plugins)
+  validate_hash($custom_plugins)
+
+  include ohmyzsh
 
   if $name == 'root' {
     $home = '/root'
   } else {
-    $home = "${ohmyzsh::params::home}/${name}"
+    $home = "${ohmyzsh::home}/${name}"
   }
 
-  if is_array($plugins) {
-    $plugins_real = join($plugins, ' ')
-  } else {
-    validate_string($plugins)
-    $plugins_real = $plugins
+  $custom_plugins_path = "${home}/.oh-my-zsh/custom/plugins"
+
+  $custom_plugins.each |$plugin, $repo| {
+    vcsrepo { "${custom_plugins_path}/${plugin}":
+      ensure   => present,
+      provider => git,
+      source   => $repo,
+      revision => 'master',
+      require  => ::Ohmyzsh::Install[$name],
+    }
   }
+
+  $all_plugins = union($plugins, keys($custom_plugins))
+
+  $plugins_real = join($all_plugins, ' ')
 
   file_line { "${name}-${plugins_real}-install":
     path    => "${home}/.zshrc",
@@ -46,5 +59,4 @@ define ohmyzsh::plugins(
     match   => '^plugins=',
     require => Ohmyzsh::Install[$name]
   }
-
 }

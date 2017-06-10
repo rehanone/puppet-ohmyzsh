@@ -1,7 +1,7 @@
 # Parameters class for ohmyzsh
 class ohmyzsh::params {
 
-  case $::osfamily {
+  case $::facts[osfamily] {
     'Redhat': {
       $zsh = '/bin/zsh'
     }
@@ -10,6 +10,6 @@ class ohmyzsh::params {
     }
   }
 
-  $home = '/home'
-
+  $source = 'https://github.com/robbyrussell/oh-my-zsh.git'
+  $home   = '/home'
 }

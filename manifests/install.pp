@@ -27,7 +27,10 @@ define ohmyzsh::install(
   $disable_auto_update = false,
 ) {
 
-  include ohmyzsh::params
+  validate_bool($set_sh)
+  validate_bool($disable_auto_update)
+
+  include ohmyzsh
 
   if ! defined(Package['git']) {
     package { 'git':
@@ -44,16 +47,16 @@ define ohmyzsh::install(
   if $name == 'root' {
     $home = '/root'
   } else {
-    $home = "${ohmyzsh::params::home}/${name}"
+    $home = "${ohmyzsh::home}/${name}"
   }
 
-  exec { "ohmyzsh::git clone ${name}":
-    creates => "${home}/.oh-my-zsh",
-    command => "git clone https://github.com/robbyrussell/oh-my-zsh.git ${home}/.oh-my-zsh || (rmdir ${home}/.oh-my-zsh && exit 1)",
-    path    => ['/bin', '/usr/bin'],
-    onlyif  => "getent passwd ${name} | cut -d : -f 6 | xargs test -e",
-    user    => $name,
-    require => Package['git'],
+  vcsrepo { "${home}/.oh-my-zsh":
+    ensure   => present,
+    provider => git,
+    source   => $ohmyzsh::source,
+    revision => 'master',
+    user     => $name,
+    require  => Package['git'],
   }
 
   exec { "ohmyzsh::cp .zshrc ${name}":
@@ -62,7 +65,7 @@ define ohmyzsh::install(
     path    => ['/bin', '/usr/bin'],
     onlyif  => "getent passwd ${name} | cut -d : -f 6 | xargs test -e",
     user    => $name,
-    require => Exec["ohmyzsh::git clone ${name}"],
+    require => Vcsrepo["${home}/.oh-my-zsh"],
     before  => File_Line["ohmyzsh::disable_auto_update ${name}"],
   }
 
@@ -87,5 +90,4 @@ define ohmyzsh::install(
     line  => "DISABLE_AUTO_UPDATE=\"${disable_auto_update}\"",
     match => '.*DISABLE_AUTO_UPDATE.*',
   }
-
 }
