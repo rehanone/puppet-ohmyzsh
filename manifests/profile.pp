@@ -13,10 +13,8 @@
 # scripts: (array) An array of paths to all the scripts
 #
 define ohmyzsh::profile(
-  $scripts = {},
+  Hash $scripts = {},
 ) {
-
-  validate_hash($scripts)
 
   include ohmyzsh
 

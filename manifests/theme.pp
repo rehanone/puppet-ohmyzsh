@@ -22,7 +22,7 @@
 # Copyright 2014
 #
 define ohmyzsh::theme(
-  $theme = 'clean',
+  String $theme = 'clean',
 ) {
 
   include ohmyzsh

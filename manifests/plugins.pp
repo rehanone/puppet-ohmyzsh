@@ -22,12 +22,15 @@
 # Copyright 2014
 #
 define ohmyzsh::plugins(
-  $plugins = ['git'],
-  $custom_plugins = {},
+  Array[String] $plugins        = [],
+  Hash[String,
+    Struct[{
+      source => Enum[git],
+      url    => Stdlib::Httpsurl,
+      ensure => Enum[present, latest]
+    }]
+  ]             $custom_plugins = {},
 ) {
-
-  validate_array($plugins)
-  validate_hash($custom_plugins)
 
   include ohmyzsh
 
@@ -39,11 +42,11 @@ define ohmyzsh::plugins(
 
   $custom_plugins_path = "${home}/.oh-my-zsh/custom/plugins"
 
-  $custom_plugins.each |$plugin, $repo| {
-    vcsrepo { "${custom_plugins_path}/${plugin}":
-      ensure   => present,
-      provider => git,
-      source   => $repo,
+  $custom_plugins.each |$key, $plugin| {
+    vcsrepo { "${custom_plugins_path}/${key}":
+      ensure   => $plugin[ensure],
+      provider => $plugin[source],
+      source   => $plugin[url],
       revision => 'master',
       require  => ::Ohmyzsh::Install[$name],
     }

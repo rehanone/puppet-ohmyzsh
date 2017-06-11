@@ -23,12 +23,11 @@
 # Copyright 2014
 #
 define ohmyzsh::install(
-  $set_sh              = false,
-  $disable_auto_update = false,
+  Enum[present, latest]
+          $ensure              = latest,
+  Boolean $set_sh              = false,
+  Boolean $disable_auto_update = false,
 ) {
-
-  validate_bool($set_sh)
-  validate_bool($disable_auto_update)
 
   include ohmyzsh
 
@@ -51,7 +50,7 @@ define ohmyzsh::install(
   }
 
   vcsrepo { "${home}/.oh-my-zsh":
-    ensure   => present,
+    ensure   => $ensure,
     provider => git,
     source   => $ohmyzsh::source,
     revision => 'master',
