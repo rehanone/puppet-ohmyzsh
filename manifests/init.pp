@@ -4,26 +4,20 @@
 #
 # Leon Brocard <acme@astray.com>
 # Zan Loy <zan.loy@gmail.com>
+# Rehan Mahmood <rehanone at gmail dot com>
 #
 # === Copyright
 #
-# Copyright 2014
+# Copyright 2017
 #
 class ohmyzsh(
-  $source   = $ohmyzsh::params::source,
-  $home     = $ohmyzsh::params::home,
-  $installs = hiera_hash('ohmyzsh::installs', {}),
-  $themes   = hiera_hash('ohmyzsh::themes', {}),
-  $plugins  = hiera_hash('ohmyzsh::plugins', {}),
-  $profiles = hiera_hash('ohmyzsh::profiles', {})
+  Stdlib::Httpsurl     $source   = $ohmyzsh::params::source,
+  Stdlib::Absolutepath $home     = $ohmyzsh::params::home,
+  Hash                 $installs = hiera_hash('ohmyzsh::installs', {}),
+  Hash                 $themes   = hiera_hash('ohmyzsh::themes', {}),
+  Hash                 $plugins  = hiera_hash('ohmyzsh::plugins', {}),
+  Hash                 $profiles = hiera_hash('ohmyzsh::profiles', {})
 ) inherits ohmyzsh::params {
-
-  validate_string($source)
-  validate_string($home)
-  validate_hash($installs)
-  validate_hash($themes)
-  validate_hash($plugins)
-  validate_hash($profiles)
 
   create_resources('ohmyzsh::install', $ohmyzsh::installs)
   create_resources('ohmyzsh::theme', $ohmyzsh::themes)

@@ -1,35 +1,37 @@
-require 'rake'
-require 'rspec/core/rake_task'
 require 'puppetlabs_spec_helper/rake_tasks'
+require 'puppet-lint/tasks/puppet-lint'
+require 'puppet_blacksmith/rake_tasks' if Bundler.rubygems.find_name('puppet-blacksmith').any?
 
-desc "Run all RSpec code examples"
-RSpec::Core::RakeTask.new(:rspec) do |t|
-  t.rspec_opts = File.read("spec/spec.opts").chomp || ""
-end
+PuppetLint.configuration.fail_on_warnings = true
+PuppetLint.configuration.send('relative')
 
-SPEC_SUITES = (Dir.entries('spec') - ['.', '..','fixtures']).select {|e| File.directory? "spec/#{e}" }
-namespace :rspec do
-  SPEC_SUITES.each do |suite|
-    desc "Run #{suite} RSpec code examples"
-    RSpec::Core::RakeTask.new(suite) do |t|
-      t.pattern = "spec/#{suite}/**/*_spec.rb"
-      t.rspec_opts = File.read("spec/spec.opts").chomp || ""
-    end
+desc 'Generate pooler nodesets'
+task :gen_nodeset do
+  require 'beaker-hostgenerator'
+  require 'securerandom'
+  require 'fileutils'
+
+  agent_target = ENV['TEST_TARGET']
+  if ! agent_target
+    STDERR.puts 'TEST_TARGET environment variable is not set'
+    STDERR.puts 'setting to default value of "redhat-64default."'
+    agent_target = 'redhat-64default.'
   end
-end
-task :default => :rspec
 
-begin
-  if Gem::Specification::find_by_name('puppet-lint')
-    require 'puppet-lint/tasks/puppet-lint'
-    PuppetLint.configuration.fail_on_warnings
-    PuppetLint.configuration.send('relative')
-    PuppetLint.configuration.send('disable_80chars')
-    PuppetLint.configuration.send('disable_class_inherits_from_params_class')
-    PuppetLint.configuration.send('disable_documentation')
-    PuppetLint.configuration.send('disable_single_quote_string_with_variables')
-    PuppetLint.configuration.ignore_paths = ["spec/**/*.pp", "vendor/**/*.pp"]
-    task :default => [:rspec, :lint]
+  master_target = ENV['MASTER_TEST_TARGET']
+  if ! master_target
+    STDERR.puts 'MASTER_TEST_TARGET environment variable is not set'
+    STDERR.puts 'setting to default value of "redhat7-64mdcl"'
+    master_target = 'redhat7-64mdcl'
   end
-rescue Gem::LoadError
+
+  targets = "#{master_target}-#{agent_target}"
+  cli = BeakerHostGenerator::CLI.new([targets])
+  nodeset_dir = "tmp/nodesets"
+  nodeset = "#{nodeset_dir}/#{targets}-#{SecureRandom.uuid}.yaml"
+  FileUtils.mkdir_p(nodeset_dir)
+  File.open(nodeset, 'w') do |fh|
+    fh.print(cli.execute)
+  end
+  puts nodeset
 end
