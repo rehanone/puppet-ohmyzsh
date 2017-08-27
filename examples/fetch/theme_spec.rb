@@ -7,7 +7,7 @@ describe 'ohmyzsh::fetch::theme' do
     context 'with a url' do
       let(:params) { super().merge({url: 'http://zanloy.com/files/dotfiles/oh-my-zsh/squared.zsh-theme'}) } 
       it do
-        should contain_wget__fetch('ohmyzsh::fetch-user1-squared.zsh-theme')
+        should contain_wget__retrieve('ohmyzsh::fetch-user1-squared.zsh-theme')
           .with_source('http://zanloy.com/files/dotfiles/oh-my-zsh/squared.zsh-theme')
           .with_destination('/home/user1/.oh-my-zsh/custom/themes/squared.zsh-theme')
           .with_user('user1')

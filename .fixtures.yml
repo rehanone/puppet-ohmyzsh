@@ -5,6 +5,6 @@ fixtures:
     vcsrepo:
       repo: "puppetlabs/vcsrepo"
   repositories:
-    wget: "https://github.com/maestrodev/puppet-wget.git"
+    wget: "https://github.com/rehanone/puppet-wget.git"
   symlinks:
     ohmyzsh: "#{source_dir}"

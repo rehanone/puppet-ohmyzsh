@@ -1,11 +1,10 @@
 define ohmyzsh::fetch::theme (
-  $url = 'UNSET',
-  $source = 'UNSET',
-  $content = 'UNSET',
-  $filename = 'UNSET',
+  Optional[Stdlib::Httpurl] $url      = undef,
+  Optional[Stdlib::Httpurl] $source   = undef,
+  Optional[String]          $content  = undef,
+  Optional[Stdlib::Absolutepath]
+                            $filename = undef,
 ) {
-
-  validate_string($filename, $url, $source, $content, $filename)
 
   include ohmyzsh
 
@@ -26,21 +25,21 @@ define ohmyzsh::fetch::theme (
     }
   }
 
-  if $url != 'UNSET' {
-    wget::fetch { "ohmyzsh::fetch-${name}-${filename}":
+  if $url != undef {
+    wget::retrieve { "ohmyzsh::fetch-${name}-${filename}":
       source      => $url,
       destination => $fullpath,
       user        => $name,
       require     => File[$themepath],
     }
-  } elsif $source != 'UNSET' {
+  } elsif $source != undef {
     file { $fullpath:
       ensure  => present,
       source  => $source,
       owner   => $name,
       require => File[$themepath],
     }
-  } elsif $content != 'UNSET' {
+  } elsif $content != undef {
     file { $fullpath:
       ensure  => present,
       content => $content,
@@ -50,5 +49,4 @@ define ohmyzsh::fetch::theme (
   } else {
     fail('No valid option set.')
   }
-
 }
