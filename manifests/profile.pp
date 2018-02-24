@@ -12,7 +12,7 @@
 #
 # scripts: (array) An array of paths to all the scripts
 #
-define ohmyzsh::profile(
+define ohmyzsh::profile (
   Hash $scripts = {},
 ) {
 
@@ -32,8 +32,7 @@ define ohmyzsh::profile(
     owner   => $name,
     require => User[$name],
   }
-  ->
-  file_line { "${home}-profile":
+  -> file_line { "${home}-profile":
     ensure  => present,
     line    => 'for f in ~/profile/*; do source "$f"; done',
     match   => 'for f in ~/profile/*; do source "$f"; done',
