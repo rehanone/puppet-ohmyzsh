@@ -7,84 +7,6 @@
   "source": "https://github.com/rehanone/puppet-ohmyzsh.git",
   "project_page": "https://github.com/rehanone/puppet-ohmyzsh",
   "issues_url": "https://github.com/rehanone/puppet-ohmyzsh/issues",
-  "tags": [
-    "EsayRSA",
-    "Public Key Infrastructure"
-  ],
-  "operatingsystem_support": [
-    {
-      "operatingsystem": "RedHat",
-      "operatingsystemrelease": [
-        "6",
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "CentOS",
-      "operatingsystemrelease": [
-        "6",
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "Scientific",
-      "operatingsystemrelease": [
-        "6",
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "Fedora",
-      "operatingsystemrelease": [
-        "21",
-        "22",
-        "23"
-      ]
-    },
-    {
-      "operatingsystem": "Debian",
-      "operatingsystemrelease": [
-        "7",
-        "8"
-      ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "12.04",
-        "14.04",
-        "16.04",
-        "16.10",
-        "17.04"
-      ]
-    },
-    {
-      "operatingsystem": "FreeBSD",
-      "operatingsystemrelease": [
-        "9",
-        "10"
-      ]
-    },
-    {
-      "operatingsystem": "DragonFly",
-      "operatingsystemrelease": [
-        "3.6",
-        "3.8",
-        "4.0",
-        "4.2",
-        "4.4"
-      ]
-    },
-    {
-      "operatingsystem": "ArchLinux"
-    }
-  ],
-  "requirements": [
-    {
-      "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 6.0.0"
-    }
-  ],
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
@@ -99,5 +21,112 @@
       "version_requirement": ">= 1.0.0 < 2.0.0"
     }
   ],
-  "data_provider": null
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Scientific",
+      "operatingsystemrelease": [
+        "5",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Fedora",
+      "operatingsystemrelease": [
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "11 SP1",
+        "11 SP2",
+        "11 SP3",
+        "11 SP4",
+        "12 SP1",
+        "12 SP2",
+        "12 SP3"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04",
+        "15.10",
+        "16.04",
+        "16.10",
+        "17.04",
+        "17.10"
+      ]
+    },
+    {
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [
+        "9",
+        "10",
+        "11"
+      ]
+    },
+    {
+      "operatingsystem": "DragonFly",
+      "operatingsystemrelease": [
+        "3.6",
+        "3.8",
+        "4.0",
+        "4.2",
+        "4.4",
+        "4.6",
+        "4.8",
+        "5.0"
+      ]
+    },
+    {
+      "operatingsystem": "ArchLinux"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.0 < 6.0.0"
+    }
+  ],
+  "tags": [
+    "zsh",
+    "ohmyzsh",
+    "oh-my-zsh"
+  ],
+  "pdk-version": "1.4.1",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.4.1-0-g52adbbb"
 }
