@@ -1,5 +1,5 @@
 # puppet-ohmyzsh
-[![Build Status](https://travis-ci.org/zanloy/puppet-ohmyzsh.svg?branch=master)](https://travis-ci.org/zanloy/puppet-ohmyzsh)
+[![Build Status](https://travis-ci.org/rehanone/puppet-ohmyzsh.svg?branch=master)](https://travis-ci.org/rehanone/puppet-ohmyzsh)
 
 This is a [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) module. It
 installs oh-my-zsh for a user and can change their shell to zsh. It can install
@@ -48,4 +48,4 @@ Please log tickets and issues on [GitHub](https://github.com/zanloy/puppet-ohmyz
 Acknowlegments
 --------------
 
-This module was originally a fork of [acme/ohmyzsh](https://github.com/acme/puppet-acme-oh-my-zsh) at version 0.1.3
+This module was originally a fork of [acme/ohmyzsh](https://github.com/rehanone/puppet-ohmyzsh) at version 0.1.3

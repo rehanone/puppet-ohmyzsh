@@ -1,9 +1,8 @@
 define ohmyzsh::fetch::theme (
   Optional[Stdlib::Httpurl] $url      = undef,
-  Optional[Stdlib::Httpurl] $source   = undef,
+  Optional[String]          $source   = undef,
   Optional[String]          $content  = undef,
-  Optional[Stdlib::Absolutepath]
-                            $filename = undef,
+  Optional[String]          $filename = undef,
 ) {
 
   include ohmyzsh

@@ -22,7 +22,7 @@
 # Copyright 2014
 #
 define ohmyzsh::plugins(
-  Array[String] $plugins        = [],
+  Array[String] $plugins        = ['git'],
   Hash[String,
     Struct[{
       source => Enum[git],
@@ -32,7 +32,7 @@ define ohmyzsh::plugins(
   ]             $custom_plugins = {},
 ) {
 
-  include ohmyzsh
+  contain ohmyzsh
 
   if $name == 'root' {
     $home = '/root'
