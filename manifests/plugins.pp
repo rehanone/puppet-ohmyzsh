@@ -32,7 +32,7 @@ define ohmyzsh::plugins(
   ]             $custom_plugins = {},
 ) {
 
-  contain ohmyzsh
+  include ohmyzsh
 
   if $name == 'root' {
     $home = '/root'
