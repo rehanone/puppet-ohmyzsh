@@ -74,12 +74,12 @@ define ohmyzsh::install(
         ensure     => present,
         name       => $name,
         managehome => true,
-        shell      => $ohmyzsh::params::zsh,
+        shell      => lookup('ohmyzsh::zsh_shell_path'),
         require    => Package['zsh'],
       }
     } else {
       User <| title == $name |> {
-        shell => $ohmyzsh::params::zsh
+        shell => lookup('ohmyzsh::zsh_shell_path')
       }
     }
   }
