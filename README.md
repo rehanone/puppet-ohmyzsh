@@ -31,12 +31,6 @@ ohmyzsh::theme { ['root', 'user1']: theme => 'robbyrussell' } # specific theme
 
 # activate plugins for a user
 ohmyzsh::plugins { 'user1': plugins => 'git github' }
-
-# upgrade oh-my-zsh for a single user
-ohmyzsh::upgrade { 'user1': }
-
-# upgrade oh-my-zsh on a different schedule (only 'daily' is defined, you are responsible for creating additional schedules)
-ohmyzsh::upgrade { 'user1': schedule => 'weekly' }
 ```
 
 Support
@@ -48,4 +42,4 @@ Please log tickets and issues on [GitHub](https://github.com/zanloy/puppet-ohmyz
 Acknowlegments
 --------------
 
-This module was originally a fork of [acme/ohmyzsh](https://github.com/rehanone/puppet-ohmyzsh) at version 0.1.3
+This module was originally a fork of [acme/ohmyzsh](https://github.com/rehanone/puppet-ohmyzsh) at version 0.1.4
