@@ -17,10 +17,13 @@ describe 'ohmyzsh class:', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily
 
   context 'installs => { root => { set_sh => true } }' do
     it 'runs successfully' do
-      pp = "class { 'ohmyzsh': "\
-             "installs => { 'root' => { set_sh => true } }, "\
-             "themes => { 'root' => { theme => 'random' } }, "\
-             "plugins => { 'root' => { plugins => ['git', 'scala'] } }, }"
+      pp = %q(
+        class { 'ohmyzsh':
+          installs => { 'root' => { set_sh => true } },
+          themes   => { 'root' => { theme => 'random' } },
+          plugins  => { 'root' => { plugins => ['git', 'scala'] } },
+        }
+      )
 
       apply_manifest(pp, catch_failures: true) do |r|
         expect(r.stderr).not_to match(%r{error}i)
