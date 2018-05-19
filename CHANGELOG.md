@@ -1,3 +1,9 @@
+## 2.0.4 (May 19, 2018)
+
+Improvements:
+
+- Updated documentation.
+
 ## 2.0.3 (May 9, 2018)
 
 Improvements:
