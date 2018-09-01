@@ -1,3 +1,12 @@
+## 2.0.5 (September 1, 2018)
+
+Improvements:
+
+- Updated `pdk` templates.
+- Added tests for Ubuntu 18.04 release.
+- Added tests for Debian 9 release.
+- Updated `puppetlabs-stdlib` dependency version.
+
 ## 2.0.4 (May 19, 2018)
 
 Improvements:
