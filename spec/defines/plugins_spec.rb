@@ -14,7 +14,7 @@ testcases = {
     expect: { home: '/home/user_with_custom_plugins', plugins: 'scala zsh-autosuggestions' },
   },
   'root' => {
-    params: { plugins: %w[git tmux] },
+    params: { plugins: ['git', 'tmux'] },
     expect: { home: '/root', plugins: 'git tmux' },
   },
 }
