@@ -1,3 +1,10 @@
+## 2.1.0 (October 14, 2018)
+
+Improvements:
+
+- Updated `pdk` templates.
+- Added support for `puppet` version 6.
+
 ## 2.0.5 (September 1, 2018)
 
 Improvements:
