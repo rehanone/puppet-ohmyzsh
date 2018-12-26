@@ -44,7 +44,8 @@ describe 'ohmyzsh::plugins' do
           it do
             is_expected.to contain_file_line("#{user}-#{values[:expect][:plugins]}-install")
               .with_path("#{values[:expect][:home]}/.zshrc")
-              .with_line("plugins=(#{values[:expect][:plugins]})")
+              .with_line("  #{values[:expect][:plugins]}")
+              .with_after('plugins=\\(')
           end
         end
       end
