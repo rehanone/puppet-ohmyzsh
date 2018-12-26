@@ -45,7 +45,14 @@ describe 'ohmyzsh::plugins' do
             is_expected.to contain_file_line("#{user}-#{values[:expect][:plugins]}-install")
               .with_path("#{values[:expect][:home]}/.zshrc")
               .with_line("  #{values[:expect][:plugins]}")
-              .with_after('plugins=\\(')
+              .with_after('^\s*plugins=\([^\)]*$')
+          end
+
+          it do
+            is_expected.to contain_file_line("#{user}-#{values[:expect][:plugins]}-install-legacy")
+              .with_path("#{values[:expect][:home]}/.zshrc")
+              .with_line("plugins=(#{values[:expect][:plugins]})")
+              .with_match('^\s*plugins=\(.*\)')
           end
         end
       end

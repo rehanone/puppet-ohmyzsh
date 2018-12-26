@@ -57,10 +57,19 @@ define ohmyzsh::plugins(
   $plugins_real = join($all_plugins, ' ')
 
   file_line { "${name}-${plugins_real}-install":
-    path    => "${home}/.zshrc",
-    line    => "  ${plugins_real}",
-    after   => 'plugins=\(',
-    match   => '^  git',
-    require => Ohmyzsh::Install[$name]
+    path               => "${home}/.zshrc",
+    line               => "  ${plugins_real}",
+    after              => '^\s*plugins=\([^\)]*$',
+    match              => '^\s*git',
+    append_on_no_match => false,
+    require            => Ohmyzsh::Install[$name]
+  }
+
+  file_line { "${name}-${plugins_real}-install-legacy":
+    path               => "${home}/.zshrc",
+    line               => "plugins=(${plugins_real})",
+    match              => '^\s*plugins=\(.*\)',
+    append_on_no_match => false,
+    require            => Ohmyzsh::Install[$name]
   }
 }
