@@ -58,9 +58,8 @@ define ohmyzsh::plugins(
 
   file_line { "${name}-${plugins_real}-install":
     path    => "${home}/.zshrc",
-    line    => "  ${plugins_real}",
-    after   => 'plugins=\(',
-    match   => '^  git',
+    line    => "plugins=(${plugins_real})",
+    match   => '^plugins=',
     require => Ohmyzsh::Install[$name]
   }
 }
