@@ -24,9 +24,10 @@
 #
 define ohmyzsh::install(
   Enum[present, latest]
-          $ensure              = latest,
-  Boolean $set_sh              = false,
+          $ensure                = latest,
+  Boolean $set_sh                = false,
   Boolean $disable_auto_update = false,
+  Boolean $override_template   = true,
 ) {
 
   include ohmyzsh
@@ -58,14 +59,26 @@ define ohmyzsh::install(
     require  => Package['git'],
   }
 
-  exec { "ohmyzsh::cp .zshrc ${name}":
-    creates => "${home}/.zshrc",
-    command => "cp ${home}/.oh-my-zsh/templates/zshrc.zsh-template ${home}/.zshrc",
-    path    => ['/bin', '/usr/bin'],
-    onlyif  => "getent passwd ${name} | cut -d : -f 6 | xargs test -e",
-    user    => $name,
-    require => Vcsrepo["${home}/.oh-my-zsh"],
-    before  => File_Line["ohmyzsh::disable_auto_update ${name}"],
+  if $override_template {
+    file { "${home}/.zshrc":
+      ensure  => file,
+      replace => 'no',
+      owner   => $name,
+      group   => $name,
+      mode    => '0644',
+      source  => "puppet:///modules/${module_name}/zshrc.zsh-template",
+      require => Vcsrepo["${home}/.oh-my-zsh"],
+    }
+  } else {
+    exec { "ohmyzsh::cp .zshrc ${name}":
+      creates => "${home}/.zshrc",
+      command => "cp ${home}/.oh-my-zsh/templates/zshrc.zsh-template ${home}/.zshrc",
+      path    => ['/bin', '/usr/bin'],
+      onlyif  => "getent passwd ${name} | cut -d : -f 6 | xargs test -e",
+      user    => $name,
+      require => Vcsrepo["${home}/.oh-my-zsh"],
+      before  => File_Line["ohmyzsh::disable_auto_update ${name}"],
+    }
   }
 
   if $set_sh {
