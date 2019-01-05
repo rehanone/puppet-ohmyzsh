@@ -3,15 +3,15 @@ require 'spec_helper'
 testcases = {
   'user1' => {
     params: {},
-    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user1', sh: false },
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user1', sh: false, override_template: true },
   },
   'user2' => {
-    params: { set_sh: true, disable_auto_update: true },
-    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user2', sh: true, disable_auto_update: true },
+    params: { set_sh: true, disable_auto_update: true, override_template: false },
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user2', sh: true, disable_auto_update: true, override_template: false },
   },
   'root' => {
     params: {},
-    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/root', sh: false },
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/root', sh: false, override_template: true },
   },
 }
 
@@ -33,12 +33,24 @@ describe 'ohmyzsh::install' do
               .with_source(values[:expect][:source])
               .with_revision('master')
           end
-          it do
-            is_expected.to contain_exec("ohmyzsh::cp .zshrc #{user}")
-              .with_creates("#{values[:expect][:home]}/.zshrc")
-              .with_command("cp #{values[:expect][:home]}/.oh-my-zsh/templates/zshrc.zsh-template #{values[:expect][:home]}/.zshrc")
-              .with_user(user)
+
+          if values[:expect][:override_template]
+            it do
+              is_expected.to contain_file("#{values[:expect][:home]}/.zshrc")
+                .with_ensure('file')
+                .with_replace('no')
+                .with_owner(user)
+                .with_mode('0644')
+            end
+          else
+            it do
+              is_expected.to contain_exec("ohmyzsh::cp .zshrc #{user}")
+                .with_creates("#{values[:expect][:home]}/.zshrc")
+                .with_command("cp #{values[:expect][:home]}/.oh-my-zsh/templates/zshrc.zsh-template #{values[:expect][:home]}/.zshrc")
+                .with_user(user)
+            end
           end
+
           if values[:expect][:sh]
             it do
               case facts[:osfamily]

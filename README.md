@@ -54,7 +54,7 @@ ohmyzsh::theme { ['root', 'user1']: } # would install 'clean' theme as default
 ohmyzsh::theme { ['root', 'user1']: theme => 'robbyrussell' } # specific theme
 
 # activate plugins for a user
-ohmyzsh::plugins { 'user1': plugins => 'git github' }
+ohmyzsh::plugins { 'user1': plugins => ['git', 'github'] }
 ```
 
 

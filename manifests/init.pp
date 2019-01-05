@@ -8,9 +8,9 @@
 #
 # === Copyright
 #
-# Copyright 2017
+# Copyright 2019
 #
-class ohmyzsh(
+class ohmyzsh (
   Stdlib::Httpsurl     $source,
   Stdlib::Absolutepath $home,
   Stdlib::Absolutepath $zsh_shell_path,
