@@ -1,3 +1,13 @@
+## 2.1.1 (January 5, 2019)
+
+Bugfixes:
+
+  - Fix the issue with multiple line replacement for plugins section in the zshrc template. [#14](https://github.com/rehanone/puppet-ohmyzsh/pull/14)
+
+Improvements:
+
+- Updated `pdk` templates.
+
 ## 2.1.0 (October 14, 2018)
 
 Improvements:
