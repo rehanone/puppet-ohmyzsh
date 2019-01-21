@@ -3,15 +3,15 @@ require 'spec_helper'
 testcases = {
   'user1' => {
     params: {},
-    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user1', sh: false, override_template: true },
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user1', sh: false, override_template: false },
   },
   'user2' => {
-    params: { set_sh: true, disable_auto_update: true, override_template: false },
-    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user2', sh: true, disable_auto_update: true, override_template: false },
+    params: { set_sh: true, disable_auto_update: true, override_template: true },
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/home/user2', sh: true, disable_auto_update: true, override_template: true },
   },
   'root' => {
     params: {},
-    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/root', sh: false, override_template: true },
+    expect: { source: 'https://github.com/robbyrussell/oh-my-zsh.git', home: '/root', sh: false, override_template: false },
   },
 }
 

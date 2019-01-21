@@ -27,7 +27,7 @@ define ohmyzsh::install(
           $ensure                = latest,
   Boolean $set_sh                = false,
   Boolean $disable_auto_update = false,
-  Boolean $override_template   = true,
+  Boolean $override_template   = false,
 ) {
 
   include ohmyzsh
