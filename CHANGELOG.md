@@ -1,3 +1,9 @@
+## 2.1.2 (January 21, 2019)
+
+Improvements:
+
+  - Change the default value for override_template from `true` to `false`. This change is due to the upstream PR [#7498](https://github.com/robbyrussell/oh-my-zsh/pull/7498).
+
 ## 2.1.1 (January 5, 2019)
 
 Bugfixes:
