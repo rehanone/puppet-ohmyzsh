@@ -1,3 +1,11 @@
+## 2.1.3 (June 15, 2019)
+
+Improvements:
+
+- Updated minimum `puppet` version to 5.5.10.
+- Updated os support matrix.
+- Updated `pdk` templates.
+
 ## 2.1.2 (January 21, 2019)
 
 Improvements:
