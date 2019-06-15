@@ -31,7 +31,7 @@ The module does expect all the data to be provided through 'Hiera'. See [Usage](
 #### Requirements
 This module is designed to be as clean and compliant with latest puppet code guidelines. It works with:
 
-  - `puppet >=4.10.0`
+  - `puppet >=5.5.10`
 
 ## Usage
 
