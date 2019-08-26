@@ -1,5 +1,7 @@
 ---
-require: rubocop-rspec
+require:
+- rubocop-rspec
+- rubocop-i18n
 AllCops:
   DisplayCopNames: true
   TargetRubyVersion: '2.1'
@@ -16,14 +18,15 @@ AllCops:
   - "**/Puppetfile"
   - "**/Vagrantfile"
   - "**/Guardfile"
-  - Vagrantfile
 Metrics/LineLength:
   Description: People have wide screens, use them.
   Max: 200
+GetText:
+  Enabled: false
 GetText/DecorateString:
   Description: We don't want to decorate test output.
   Exclude:
-  - spec/*
+  - spec/**/*
 RSpec/BeforeAfterAll:
   Description: Beware of using after(:all) as it may cause state to leak between tests.
     A necessary evil in acceptance testing.
@@ -71,8 +74,6 @@ Style/TrailingCommaInLiteral:
 Style/SymbolArray:
   Description: Using percent style obscures symbolic intent of array's contents.
   EnforcedStyle: brackets
-Style/UnneededPercentQ:
-  Enabled: false
 RSpec/MessageSpies:
   EnforcedStyle: receive
 Style/Documentation:

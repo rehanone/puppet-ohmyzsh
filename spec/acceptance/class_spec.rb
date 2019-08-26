@@ -20,7 +20,7 @@ describe 'ohmyzsh class:', unless: UNSUPPORTED_PLATFORMS.include?(fact('osfamily
       pp = %q(
         class { 'ohmyzsh':
           installs => { 'root' => { set_sh => true } },
-          themes   => { 'root' => { theme => 'random' } },
+          themes   => { 'root' => { theme => "random" } },
           plugins  => { 'root' => { plugins => ['git', 'scala'] } },
         }
       )
