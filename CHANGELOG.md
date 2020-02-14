@@ -1,3 +1,11 @@
+## 2.3.0 (February 14, 2020)
+
+Improvements:
+
+- Added support for CentOS 8.
+- Updated os support matrix.
+- Updated `pdk` templates.
+
 ## 2.2.0 (August 25, 2019)
 
 Improvements:
