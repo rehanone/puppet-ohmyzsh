@@ -24,8 +24,8 @@
 #
 define ohmyzsh::install(
   Enum[present, latest]
-          $ensure                = latest,
-  Boolean $set_sh                = false,
+          $ensure              = latest,
+  Boolean $set_sh              = false,
   Boolean $disable_auto_update = false,
   Boolean $override_template   = false,
 ) {
