@@ -1,3 +1,9 @@
+## 2.3.1 (April 12, 2020)
+
+Improvements:
+
+- Updated `pdk` templates.
+
 ## 2.3.0 (February 14, 2020)
 
 Improvements:
