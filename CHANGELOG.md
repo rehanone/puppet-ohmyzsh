@@ -1,3 +1,9 @@
+## 2.3.2 (May 1, 2020)
+
+Improvements:
+
+- Added support for Ubuntu 20.04.
+
 ## 2.3.1 (April 12, 2020)
 
 Improvements:

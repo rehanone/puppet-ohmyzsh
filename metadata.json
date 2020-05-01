@@ -1,6 +1,6 @@
 {
   "name": "rehan-ohmyzsh",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "author": "Rehan Mahmood",
   "summary": "Install and configure the best shell, oh-my-zsh.",
   "license": "Apache-2.0",
@@ -86,7 +86,8 @@
         "18.04",
         "18.10",
         "19.04",
-        "19.10"
+        "19.10",
+        "20.04"
       ]
     },
     {
