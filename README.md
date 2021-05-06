@@ -1,6 +1,6 @@
 # rehan-ohmyzsh
 
-[![Puppet Forge](http://img.shields.io/puppetforge/v/rehan/ohmyzsh.svg)](https://forge.puppetlabs.com/rehan/ohmyzsh) [![Build Status](https://travis-ci.org/rehanone/puppet-ohmyzsh.svg?branch=master)](https://travis-ci.org/rehanone/puppet-ohmyzsh)
+[![Puppet Forge](http://img.shields.io/puppetforge/v/rehan/ohmyzsh.svg)](https://forge.puppetlabs.com/rehan/ohmyzsh) [![Build Status](https://travis-ci.com/rehanone/puppet-ohmyzsh.svg?branch=master)](https://travis-ci.com/rehanone/puppet-ohmyzsh)
 
 #### Table of Contents
 1. [Overview](#overview)

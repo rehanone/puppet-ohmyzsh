@@ -37,7 +37,6 @@ define ohmyzsh::theme(
     path    => "${home}/.zshrc",
     line    => "ZSH_THEME=\"${theme}\"",
     match   => '^ZSH_THEME',
-    require => Ohmyzsh::Install[$name]
+    require => Ohmyzsh::Install[$name],
   }
-
 }
