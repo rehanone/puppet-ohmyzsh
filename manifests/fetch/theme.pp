@@ -33,16 +33,20 @@ define ohmyzsh::fetch::theme (
     }
   } elsif $source != undef {
     file { $fullpath:
-      ensure  => present,
+      ensure  => file,
       source  => $source,
       owner   => $name,
+      group   => $name,
+      mode    => '0644',
       require => File[$themepath],
     }
   } elsif $content != undef {
     file { $fullpath:
-      ensure  => present,
+      ensure  => file,
       content => $content,
       owner   => $name,
+      group   => $name,
+      mode    => '0644',
       require => File[$themepath],
     }
   } else {

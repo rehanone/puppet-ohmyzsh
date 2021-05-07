@@ -25,9 +25,9 @@ define ohmyzsh::plugins(
   Array[String] $plugins        = ['git'],
   Hash[String,
     Struct[{
-      source => Enum[git],
-      url    => Stdlib::Httpsurl,
-      ensure => Enum[present, latest]
+        source => Enum[git],
+        url    => Stdlib::Httpsurl,
+        ensure => Enum[present, latest]
     }]
   ]             $custom_plugins = {},
 ) {
@@ -60,6 +60,6 @@ define ohmyzsh::plugins(
     path    => "${home}/.zshrc",
     line    => "plugins=(${plugins_real})",
     match   => '^plugins=',
-    require => Ohmyzsh::Install[$name]
+    require => Ohmyzsh::Install[$name],
   }
 }

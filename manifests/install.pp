@@ -22,23 +22,22 @@
 #
 # Copyright 2014
 #
-define ohmyzsh::install(
-  Enum[present, latest]
-          $ensure              = latest,
-  Boolean $set_sh              = false,
-  Boolean $disable_auto_update = false,
-  Boolean $override_template   = false,
+define ohmyzsh::install (
+  Enum[present, latest] $ensure = latest,
+  Boolean $set_sh               = false,
+  Boolean $disable_auto_update  = false,
+  Boolean $override_template    = false,
 ) {
 
   include ohmyzsh
 
-  if ! defined(Package['git']) {
+  if !defined(Package['git']) {
     package { 'git':
       ensure => present,
     }
   }
 
-  if ! defined(Package['zsh']) {
+  if !defined(Package['zsh']) {
     package { 'zsh':
       ensure => present,
     }
@@ -82,7 +81,7 @@ define ohmyzsh::install(
   }
 
   if $set_sh {
-    if ! defined(User[$name]) {
+    if !defined(User[$name]) {
       user { "ohmyzsh::user ${name}":
         ensure     => present,
         name       => $name,
