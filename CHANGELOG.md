@@ -1,3 +1,12 @@
+## 2.4.0 (May 7, 2021)
+
+**Improvements:**
+
+- Updated os support matrix.
+- Updated `pdk` templates.
+- Updated travis-ci links in the documentation.
+- Added acceptance tests for openSUSE Leap 15.
+
 ## 2.3.2 (May 1, 2020)
 
 **Improvements:**
