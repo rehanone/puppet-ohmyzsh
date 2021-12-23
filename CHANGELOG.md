@@ -1,3 +1,13 @@
+## 3.0.0 (December 23, 2021)
+
+**Improvements:**
+
+- Support for proper FreeBSD shell path. ([#22](https://github.com/rehanone/puppet-ohmyzsh/pull/22); dctrotz)
+- Updated os support matrix.
+- Updated `pdk` templates.
+- Updated minimum `puppet` version to `6.0.0`.
+- Updated dependency versions.
+
 ## 2.4.0 (May 7, 2021)
 
 **Improvements:**
