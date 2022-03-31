@@ -1,4 +1,4 @@
 ---
-ohmyzsh::source: 'https://github.com/robbyrussell/oh-my-zsh.git'
+ohmyzsh::source: 'https://github.com/ohmyzsh/ohmyzsh.git'
 ohmyzsh::home: '/home'
 ohmyzsh::zsh_shell_path: '/usr/bin/zsh'
