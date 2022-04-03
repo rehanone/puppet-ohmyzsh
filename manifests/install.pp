@@ -101,4 +101,14 @@ define ohmyzsh::install (
     line  => "DISABLE_AUTO_UPDATE=\"${disable_auto_update}\"",
     match => '.*DISABLE_AUTO_UPDATE.*',
   }
+
+  # Fix permissions on '~/.oh-my-zsh/cache/completions'
+  file { "${home}/.oh-my-zsh/cache/completions":
+    ensure  => directory,
+    replace => 'no',
+    owner   => $name,
+    group   => $name,
+    mode    => '0755',
+    require => Vcsrepo["${home}/.oh-my-zsh"],
+  }
 }
