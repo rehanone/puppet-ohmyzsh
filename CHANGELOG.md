@@ -1,3 +1,15 @@
+## 4.0.0 (April 3, 2022)
+
+**Breaking Changes:**
+
+- Updated upstream ohmyzsh project url to reflect the new repository. ([#28](https://github.com/rehanone/puppet-ohmyzsh/pull/28); anthonysomerset)
+- *Note:* To get this module working again, please manually delete the directory `~/.oh-my-zsh` and then run the puppet again. 
+
+**Improvements:**
+
+- Updated `pdk` templates.
+- Fix permissions on `~/.oh-my-zsh/cache/completions`.
+
 ## 3.0.0 (December 23, 2021)
 
 **Improvements:**
