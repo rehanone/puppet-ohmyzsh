@@ -19,16 +19,21 @@ define ohmyzsh::profile (
   include ohmyzsh
 
   if $name == 'root' {
-    $home = '/root'
+    $home  = '/root'
+    $group = fact('os.family') ? {
+      /(Free|Open)BSD/ => 'wheel',
+      default          => 'root',
+    }
   } else {
-    $home = "${ohmyzsh::home}/${name}"
+    $home  = "${ohmyzsh::home}/${name}"
+    $group = $name
   }
 
   $shell_resource_path = "${home}/.zshrc"
 
   file { "${home}/profile":
     ensure  => directory,
-    group   => $name,
+    group   => $group,
     owner   => $name,
     require => User[$name],
   }
@@ -47,7 +52,7 @@ define ohmyzsh::profile (
     file { "${home}/profile/${script_name}":
       ensure  => file,
       owner   => $name,
-      group   => $name,
+      group   => $group,
       mode    => '0744',
       source  => $script_path,
       require => File["${home}/profile"],

@@ -28,9 +28,14 @@ define ohmyzsh::theme(
   include ohmyzsh
 
   if $name == 'root' {
-    $home = '/root'
+    $home  = '/root'
+    $group = fact('os.family') ? {
+      /(Free|Open)BSD/ => 'wheel',
+      default          => 'root',
+    }
   } else {
-    $home = "${ohmyzsh::home}/${name}"
+    $home  = "${ohmyzsh::home}/${name}"
+    $group = $name
   }
 
   file_line { "${name}-${theme}-install":

@@ -25,7 +25,7 @@ describe 'ohmyzsh::profile' do
       testcases.each do |user, values|
         let(:pre_condition) do
           [
-            'user{"root": }',
+            'user {"root": }',
             'user {"user1": }',
             'user {"user2": }',
             'ohmyzsh::install {"root": set_sh => true, }',
@@ -39,9 +39,19 @@ describe 'ohmyzsh::profile' do
           let(:params) { values[:params] }
 
           it do
+            group = if user == 'root'
+                      case facts[:osfamily]
+                      when 'FreeBSD', 'OpenBSD'
+                        'wheel'
+                      else
+                        'root'
+                      end
+                    else
+                      user
+                    end
             is_expected.to contain_file("#{values[:expect][:home]}/profile")
               .with_ensure('directory')
-              .with_group(user)
+              .with_group(group)
               .with_owner(user)
           end
 
