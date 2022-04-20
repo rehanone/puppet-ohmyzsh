@@ -8,9 +8,14 @@ define ohmyzsh::fetch::theme (
   include ohmyzsh
 
   if $name == 'root' {
-    $home = '/root'
+    $home  = '/root'
+    $group = fact('os.family') ? {
+      /(Free|Open)BSD/ => 'wheel',
+      default          => 'root',
+    }
   } else {
-    $home = "${ohmyzsh::home}/${name}"
+    $home  = "${ohmyzsh::home}/${name}"
+    $group = $name
   }
 
   $themepath = "${home}/.oh-my-zsh/custom/themes"
@@ -36,7 +41,7 @@ define ohmyzsh::fetch::theme (
       ensure  => file,
       source  => $source,
       owner   => $name,
-      group   => $name,
+      group   => $group,
       mode    => '0644',
       require => File[$themepath],
     }
@@ -45,7 +50,7 @@ define ohmyzsh::fetch::theme (
       ensure  => file,
       content => $content,
       owner   => $name,
-      group   => $name,
+      group   => $group,
       mode    => '0644',
       require => File[$themepath],
     }

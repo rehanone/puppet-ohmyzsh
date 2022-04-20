@@ -35,9 +35,14 @@ define ohmyzsh::plugins(
   include ohmyzsh
 
   if $name == 'root' {
-    $home = '/root'
+    $home  = '/root'
+    $group = fact('os.family') ? {
+      /(Free|Open)BSD/ => 'wheel',
+      default          => 'root',
+    }
   } else {
-    $home = "${ohmyzsh::home}/${name}"
+    $home  = "${ohmyzsh::home}/${name}"
+    $group = $name
   }
 
   $custom_plugins_path = "${home}/.oh-my-zsh/custom/plugins"

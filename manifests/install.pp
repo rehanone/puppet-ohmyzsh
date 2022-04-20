@@ -44,9 +44,14 @@ define ohmyzsh::install (
   }
 
   if $name == 'root' {
-    $home = '/root'
+    $home  = '/root'
+    $group = fact('os.family') ? {
+      /(Free|Open)BSD/ => 'wheel',
+      default          => 'root',
+    }
   } else {
-    $home = "${ohmyzsh::home}/${name}"
+    $home  = "${ohmyzsh::home}/${name}"
+    $group = $name
   }
 
   vcsrepo { "${home}/.oh-my-zsh":
@@ -63,7 +68,7 @@ define ohmyzsh::install (
       ensure  => file,
       replace => 'no',
       owner   => $name,
-      group   => $name,
+      group   => $group,
       mode    => '0644',
       source  => "puppet:///modules/${module_name}/zshrc.zsh-template",
       require => Vcsrepo["${home}/.oh-my-zsh"],
@@ -107,7 +112,7 @@ define ohmyzsh::install (
     ensure  => directory,
     replace => 'no',
     owner   => $name,
-    group   => $name,
+    group   => $group,
     mode    => '0755',
     require => Vcsrepo["${home}/.oh-my-zsh"],
   }
