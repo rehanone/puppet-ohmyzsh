@@ -1,0 +1,2 @@
+### Puppet Concat: zshrc-070-source.zsh-template
+source $ZSH/oh-my-zsh.sh

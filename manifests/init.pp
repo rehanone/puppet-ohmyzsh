@@ -17,6 +17,7 @@
 # @param themes         Configure the themes for users defined in this hash. See data/ for the default value.
 # @param plugins        Configure the plugins for users defined in this hash. See data/ for the default value.
 # @param profiles       Configure the profile for users defined in this hash. See data/ for the default value.
+# @param concat         Use the concat module to manage .zshrc files.
 #
 #
 # @author Leon Brocard <acme@astray.com>
@@ -31,6 +32,7 @@ class ohmyzsh (
   Hash                 $themes,
   Hash                 $plugins,
   Hash                 $profiles,
+  Boolean              $concat,
 ) {
   create_resources('ohmyzsh::install', $ohmyzsh::installs)
   create_resources('ohmyzsh::theme', $ohmyzsh::themes)
