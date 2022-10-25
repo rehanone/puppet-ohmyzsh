@@ -25,9 +25,11 @@ define ohmyzsh::plugins(
   Array[String] $plugins        = ['git'],
   Hash[String,
     Struct[{
-        source => Enum[git],
-        url    => Stdlib::Httpsurl,
-        ensure => Enum[present, latest]
+        source   => Enum[git],
+        url      => Stdlib::Httpsurl,
+        ensure   => Enum[present, latest],
+        revision => Optional[String],
+        depth    => Optional[Integer]
     }]
   ]             $custom_plugins = {},
 ) {
@@ -52,7 +54,8 @@ define ohmyzsh::plugins(
       ensure   => $plugin[ensure],
       provider => $plugin[source],
       source   => $plugin[url],
-      revision => 'master',
+      depth    => $plugin[depth],
+      revision => $plugin[revision],
       require  => ::Ohmyzsh::Install[$name],
     }
   }
