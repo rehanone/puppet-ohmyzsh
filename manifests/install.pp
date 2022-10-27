@@ -105,6 +105,7 @@ define ohmyzsh::install (
     path  => "${home}/.zshrc",
     line  => "DISABLE_AUTO_UPDATE=\"${disable_auto_update}\"",
     match => '.*DISABLE_AUTO_UPDATE.*',
+    after => '^plugins=',
   }
 
   # Fix permissions on '~/.oh-my-zsh/cache/completions'
