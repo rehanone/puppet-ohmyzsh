@@ -6,24 +6,23 @@ define ohmyzsh::fetch::theme (
   Optional[String]          $revision = undef,
   Optional[Integer]         $depth    = undef,
 ) {
-
   include ohmyzsh
 
   if $name == 'root' {
-    $home  = '/root'
+    $home = '/root'
     $group = fact('os.family') ? {
       /(Free|Open)BSD/ => 'wheel',
       default          => 'root',
     }
   } else {
-    $home  = "${ohmyzsh::home}/${name}"
+    $home = "${ohmyzsh::home}/${name}"
     $group = $name
   }
 
   $themepath = "${home}/.oh-my-zsh/custom/themes"
   $fullpath = "${themepath}/${filename}"
 
-  if ! defined(File[$themepath]) {
+  if !defined(File[$themepath]) {
     file { $themepath:
       ensure  => directory,
       owner   => $name,
