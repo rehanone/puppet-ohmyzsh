@@ -3,6 +3,8 @@ define ohmyzsh::fetch::theme (
   Optional[String]          $source   = undef,
   Optional[String]          $content  = undef,
   Optional[String]          $filename = undef,
+  Optional[String]          $revision = undef,
+  Optional[Integer]         $depth    = undef,
 ) {
 
   include ohmyzsh
@@ -29,7 +31,16 @@ define ohmyzsh::fetch::theme (
     }
   }
 
-  if $url != undef {
+  if $source == 'git' {
+    vcsrepo { $fullpath:
+      ensure   => present,
+      provider => 'git',
+      source   => $url,
+      revision => $revision,
+      depth    => $depth,
+      require  => ::Ohmyzsh::Install[$name],
+    }
+  } elsif $url != undef {
     wget::retrieve { "ohmyzsh::fetch-${name}-${filename}":
       source      => $url,
       destination => $fullpath,
