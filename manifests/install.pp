@@ -28,7 +28,6 @@ define ohmyzsh::install (
   Boolean $disable_auto_update  = false,
   Boolean $override_template    = false,
 ) {
-
   include ohmyzsh
 
   if !defined(Package['git']) {
@@ -44,13 +43,13 @@ define ohmyzsh::install (
   }
 
   if $name == 'root' {
-    $home  = '/root'
+    $home = '/root'
     $group = fact('os.family') ? {
       /(Free|Open)BSD/ => 'wheel',
       default          => 'root',
     }
   } else {
-    $home  = "${ohmyzsh::home}/${name}"
+    $home = "${ohmyzsh::home}/${name}"
     $group = $name
   }
 

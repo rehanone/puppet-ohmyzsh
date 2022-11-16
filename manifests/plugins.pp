@@ -21,29 +21,30 @@
 #
 # Copyright 2014
 #
-define ohmyzsh::plugins(
+define ohmyzsh::plugins (
   Array[String] $plugins        = ['git'],
   Hash[String,
-    Struct[{
+    Struct[
+      {
         source   => Enum[git],
         url      => Stdlib::Httpsurl,
         ensure   => Enum[present, latest],
         revision => Optional[String],
         depth    => Optional[Integer]
-    }]
+      }
+    ]
   ]             $custom_plugins = {},
 ) {
-
   include ohmyzsh
 
   if $name == 'root' {
-    $home  = '/root'
+    $home = '/root'
     $group = fact('os.family') ? {
       /(Free|Open)BSD/ => 'wheel',
       default          => 'root',
     }
   } else {
-    $home  = "${ohmyzsh::home}/${name}"
+    $home = "${ohmyzsh::home}/${name}"
     $group = $name
   }
 

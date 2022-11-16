@@ -14,10 +14,10 @@ class ohmyzsh (
   Stdlib::Httpsurl     $source,
   Stdlib::Absolutepath $home,
   Stdlib::Absolutepath $zsh_shell_path,
-  Hash                 $installs = lookup('ohmyzsh::installs', Hash, 'hash', {}),
-  Hash                 $themes   = lookup('ohmyzsh::themes', Hash, 'hash', {}),
-  Hash                 $plugins  = lookup('ohmyzsh::plugins', Hash, 'hash', {}),
-  Hash                 $profiles = lookup('ohmyzsh::profiles', Hash, 'hash', {})
+  Hash                 $installs,
+  Hash                 $themes,
+  Hash                 $plugins,
+  Hash                 $profiles,
 ) {
   create_resources('ohmyzsh::install', $ohmyzsh::installs)
   create_resources('ohmyzsh::theme', $ohmyzsh::themes)

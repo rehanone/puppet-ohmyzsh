@@ -21,20 +21,19 @@
 #
 # Copyright 2014
 #
-define ohmyzsh::theme(
+define ohmyzsh::theme (
   String $theme = 'clean',
 ) {
-
   include ohmyzsh
 
   if $name == 'root' {
-    $home  = '/root'
+    $home = '/root'
     $group = fact('os.family') ? {
       /(Free|Open)BSD/ => 'wheel',
       default          => 'root',
     }
   } else {
-    $home  = "${ohmyzsh::home}/${name}"
+    $home = "${ohmyzsh::home}/${name}"
     $group = $name
   }
 
