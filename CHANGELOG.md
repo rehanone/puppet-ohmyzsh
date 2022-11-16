@@ -1,3 +1,13 @@
+## 4.1.0 (November 16, 2022)
+
+**Improvements:**
+
+- fix disable_auto_update. ([#34](https://github.com/rehanone/puppet-ohmyzsh/pull/34); anthonysomerset)
+- Add the ability to customize the clone for plugins. ([#32](https://github.com/rehanone/puppet-ohmyzsh/pull/33); Safranil)
+- Add the ability to use a Git repository for themes. ([#32](https://github.com/rehanone/puppet-ohmyzsh/pull/32); Safranil)
+- Updated os support matrix.
+- Updated `pdk` templates.
+
 ## 4.0.0 (April 3, 2022)
 
 **Breaking Changes:**
