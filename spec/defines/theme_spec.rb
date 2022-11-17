@@ -50,17 +50,17 @@ describe 'ohmyzsh::theme' do
         context 'using array' do
           let(:params) { { theme: ['this', 'is an array'] } }
 
-          it { expect { is_expected.to compile }.to raise_error }
+          it { expect { is_expected.to compile }.to raise_error Exception }
         end
         context 'using hash' do
           let(:params) { { theme: { 'this' => 'is a hash' } } }
 
-          it { expect { is_expected.to compile }.to raise_error }
+          it { expect { is_expected.to compile }.to raise_error Exception }
         end
         context 'using integer' do
           let(:params) { { plugins: 1 } }
 
-          it { expect { is_expected.to compile }.to raise_error }
+          it { expect { is_expected.to compile }.to raise_error Exception }
         end
       end
     end
