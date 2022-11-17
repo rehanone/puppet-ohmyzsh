@@ -54,12 +54,12 @@ describe 'ohmyzsh::plugins' do
         context 'using hash as plugins' do
           let(:params) { { plugins: { 'this' => 'is a hash' } } }
 
-          it { expect { is_expected.to compile }.to raise_error }
+          it { expect { is_expected.to compile }.to raise_error Exception }
         end
         context 'using integer as plugins' do
           let(:params) { { plugins: 1 } }
 
-          it { expect { is_expected.to compile }.to raise_error }
+          it { expect { is_expected.to compile }.to raise_error Exception }
         end
       end
     end

@@ -74,7 +74,7 @@ describe 'ohmyzsh::fetch::theme' do
         context 'without any params' do
           let(:params) { { filename: 'squared.zsh-theme' } }
 
-          it { expect { is_expected.to compile }.to raise_error }
+          it { expect { is_expected.to compile }.to raise_error Exception }
         end
       end
     end
