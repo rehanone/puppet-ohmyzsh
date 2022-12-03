@@ -52,15 +52,21 @@ appveyor.yml:
       collection: puppet7
     - set: debian9-64
       collection: puppet6
-    - set: debian8-64
-      collection: puppet6
+#    - set: almalinux9-64
+#      collection: puppet7
+#    - set: almalinux9-64
+#      collection: puppet6
     - set: almalinux8-64
       collection: puppet7
     - set: almalinux8-64
       collection: puppet6
-#    - set: rocky8-64
+#    - set: rockylinux9-64
 #      collection: puppet7
-#    - set: rocky8-64
+#    - set: rockylinux9-64
+#      collection: puppet6
+#    - set: rockylinux8-64
+#      collection: puppet7
+#    - set: rockylinux8-64
 #      collection: puppet6
 #    - set: opensuse15-64
 #      collection: puppet7
