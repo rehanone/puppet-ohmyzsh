@@ -1,6 +1,13 @@
 class { 'ohmyzsh': }
 
 # for a single user
-ohmyzsh::install { 'vagrant': disable_auto_update => true, set_sh => true }
+ohmyzsh::install { 'vagrant':
+  set_sh                => true,
+  auto_update_mode      => reminder,
+  auto_update_frequency => 7,
+  update_zshrc          => always,
+}
 
-ohmyzsh::plugins { 'vagrant': plugins => ['git',  'github'] }
+ohmyzsh::plugins { 'vagrant':
+  plugins => ['git', 'github'],
+}

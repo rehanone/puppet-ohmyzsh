@@ -10,25 +10,33 @@
 #
 # === Parameters
 #
-# set_sh: (boolean) whether to change the user shell to zsh
-# disable_auto_update: (boolean) whether to prompt for updates bi-weekly
+# set_sh: (boolean) controls whether to change the user shell to zsh
+# update_zshrc: (enum) controls the update of .zshrc from the upstream template. Default value is `disabled`
+# auto_update_mode: (enum) controls the update check for oh-my-zsh. Default value is `disabled`.
+# auto_update_frequency: (integer) controls the update check frequency. Default value is `14`.
 #
 # === Authors
 #
 # Leon Brocard <acme@astray.com>
 # Zan Loy <zan.loy@gmail.com>
+# Rehan Mahmood
 #
 # === Copyright
 #
-# Copyright 2014
+# Copyright 2022
 #
 define ohmyzsh::install (
-  Enum[present, latest] $ensure = latest,
-  Boolean $set_sh               = false,
-  Boolean $disable_auto_update  = false,
-  Boolean $override_template    = false,
+  Enum[present, latest] $ensure     = latest,
+  Boolean $set_sh                   = false,
+  Enum[always, disabled, sync]
+  $update_zshrc                     = disabled,
+  Boolean $backup_zshrc             = true,
+  Enum[auto, disabled, reminder]
+  $auto_update_mode                 = disabled,
+  Integer[0] $auto_update_frequency = 14,
 ) {
   include ohmyzsh
+  $date_command = '$(date +\'%Y-%m-%dT%H:%M:%S%:z\')'
 
   if !defined(Package['git']) {
     package { 'git':
@@ -62,17 +70,30 @@ define ohmyzsh::install (
     require  => Package['git'],
   }
 
-  if $override_template {
-    file { "${home}/.zshrc":
-      ensure  => file,
-      replace => 'no',
-      owner   => $name,
-      group   => $group,
-      mode    => '0644',
-      source  => "puppet:///modules/${module_name}/zshrc.zsh-template",
-      require => Vcsrepo["${home}/.oh-my-zsh"],
+  if $update_zshrc == sync {
+    if $backup_zshrc {
+      exec { "backup .zshrc ${name}":
+        command     => "cp ${home}/.zshrc ${home}/.zshrc.bak.${date_command}",
+        path        => ['/bin', '/usr/bin'],
+        user        => $name,
+        before      => [
+          File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+        ],
+        subscribe   => Vcsrepo["${home}/.oh-my-zsh"],
+        refreshonly => true,
+      }
     }
-  } else {
+    -> exec { "ohmyzsh::cp .zshrc ${name}":
+      command     => "cp ${home}/.oh-my-zsh/templates/zshrc.zsh-template ${home}/.zshrc",
+      path        => ['/bin', '/usr/bin'],
+      user        => $name,
+      before      => [
+        File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+      ],
+      subscribe   => Vcsrepo["${home}/.oh-my-zsh"],
+      refreshonly => true,
+    }
+  } elsif $update_zshrc == disabled {
     exec { "ohmyzsh::cp .zshrc ${name}":
       creates => "${home}/.zshrc",
       command => "cp ${home}/.oh-my-zsh/templates/zshrc.zsh-template ${home}/.zshrc",
@@ -80,7 +101,30 @@ define ohmyzsh::install (
       onlyif  => "getent passwd ${name} | cut -d : -f 6 | xargs test -e",
       user    => $name,
       require => Vcsrepo["${home}/.oh-my-zsh"],
-      before  => File_Line["ohmyzsh::disable_auto_update ${name}"],
+      before  => [
+        File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+      ],
+    }
+  } elsif $update_zshrc == always {
+    if $backup_zshrc {
+      exec { "backup .zshrc ${name}":
+        command     => "cp ${home}/.zshrc ${home}/.zshrc.bak.${date_command}",
+        path        => ['/bin', '/usr/bin'],
+        user        => $name,
+        before      => [
+          File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+        ],
+        require => Vcsrepo["${home}/.oh-my-zsh"],
+      }
+    }
+    -> exec { "ohmyzsh::cp .zshrc ${name}":
+      command => "cp ${home}/.oh-my-zsh/templates/zshrc.zsh-template ${home}/.zshrc",
+      path    => ['/bin', '/usr/bin'],
+      user    => $name,
+      before  => [
+        File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+      ],
+      require => Vcsrepo["${home}/.oh-my-zsh"],
     }
   }
 
@@ -100,11 +144,68 @@ define ohmyzsh::install (
     }
   }
 
-  file_line { "ohmyzsh::disable_auto_update ${name}":
+  file_line { "ohmyzsh::auto_update_frequency - ${name}":
     path  => "${home}/.zshrc",
-    line  => "DISABLE_AUTO_UPDATE=\"${disable_auto_update}\"",
-    match => '.*DISABLE_AUTO_UPDATE.*',
-    after => '^plugins=',
+    line  => "zstyle ':omz:update' frequency ${auto_update_frequency}",
+    match => '.*zstyle\ \':omz:update\'\ frequency .*',
+  }
+  if $auto_update_mode == disabled {
+    file_line { "enable ohmyzsh::auto_update_mode disabled - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "zstyle ':omz:update' mode disabled",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ disabled.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
+    file_line { "disable ohmyzsh::auto_update_mode auto - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "# zstyle ':omz:update' mode auto",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ auto.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
+    file_line { "disable ohmyzsh::auto_update_mode reminder - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "# zstyle ':omz:update' mode reminder",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ reminder.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
+  } elsif $auto_update_mode == auto {
+    file_line { "enable ohmyzsh::auto_update_mode auto - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "zstyle ':omz:update' mode auto",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ auto.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
+    file_line { "disable ohmyzsh::auto_update_mode disabled - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "# zstyle ':omz:update' mode disabled",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ disabled.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
+    file_line { "disable ohmyzsh::auto_update_mode reminder - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "# zstyle ':omz:update' mode reminder",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ reminder.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
+  } elsif $auto_update_mode == reminder {
+    file_line { "enable ohmyzsh::auto_update_mode reminder - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "zstyle ':omz:update' mode reminder",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ reminder.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
+    file_line { "disable ohmyzsh::auto_update_mode auto - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "# zstyle ':omz:update' mode auto",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ auto.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
+    file_line { "disable ohmyzsh::auto_update_mode disabled - ${name}":
+      path    => "${home}/.zshrc",
+      line    => "# zstyle ':omz:update' mode disabled",
+      match   => '.*zstyle\ \':omz:update\'\ mode\ disabled.*',
+      require => File_Line["ohmyzsh::auto_update_frequency - ${name}"],
+    }
   }
 
   # Fix permissions on '~/.oh-my-zsh/cache/completions'
