@@ -41,7 +41,10 @@ ohmyzsh::install { 'user1': }
 ohmyzsh::install { ['root', 'user1']: set_sh => true }
 
 # install and disable prompt for automatic updates
-ohmyzsh::install { 'user2': disable_auto_update => true }
+ohmyzsh::install { 'user2': auto_update_mode => disabled }
+
+# install and sync the .zshrc when upstream project is updated.
+ohmyzsh::install { 'user2': update_zshrc => sync }
 
 # install a theme for a user
 ohmyzsh::fetch::theme { 'root': url => 'http://zanloy.com/files/dotfiles/oh-my-zsh/squared.zsh-theme' }
