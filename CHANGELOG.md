@@ -1,3 +1,21 @@
+## 5.0.0 (December 16, 2022)
+
+**Breaking Changes:**
+
+This release addresses the upstream changes in `oh-my-zsh` related to `DISABLE_AUTO_UPDATE`
+variable being deprecated. It replaces the `disable_auto_update` with `auto_update_mode` and `auto_update_frequency` variables in class `ohmyzsh::install`. The `auto_update_mode` has these values (`auto`, `disabled`, `reminder`). This is as per documentation for [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/wiki/Settings).
+
+Also, this release replaces `override_template` feature with a new `update_zshrc` variable in `ohmyzsh::install`. This new variable has three values:
+- `always` - Always replaces your local .zshrc file with upstream template. Use it with care!
+- `disabled` - Disables replacement of your local .zshrc file with upstream template except if the file does not exist or on first installation. This is default.
+- `sync` - Replaces your local .zshrc file with upstream template only when there is a change in upstream git repository. The upstream change is not just limited to the template but could be any file.
+
+There is a backup feature that creates a backup of your previous `.zshrc` file using the following naming convention:
+
+`.zshrc.bak.$(date +'%Y-%m-%dT%H:%M:%S%:z')`
+
+It is enabled by default but can be disabled using `backup_zshrc` variable.
+
 ## 4.1.0 (November 16, 2022)
 
 **Improvements:**
