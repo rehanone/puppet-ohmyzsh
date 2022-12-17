@@ -141,6 +141,8 @@ define ohmyzsh::install (
       User <| title == $name |> {
         shell => lookup('ohmyzsh::zsh_shell_path')
       }
+
+      Package['zsh'] -> User <| title == $name |>
     }
   }
 
