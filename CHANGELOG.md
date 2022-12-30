@@ -1,3 +1,10 @@
+## 5.0.1 (December 29, 2022)
+
+**Improvements:**
+
+- Add the package dependency for unmanaged users. ([#39](https://github.com/rehanone/puppet-ohmyzsh/pull/39); Safranil)
+- Streamline `install` inter-dependencies to ensure all applicable tasks execute in correct order and nothing is missed out.
+
 ## 5.0.0 (December 16, 2022)
 
 **Breaking Changes:**
