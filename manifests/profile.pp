@@ -1,19 +1,11 @@
-# == Define: ohmyzsh::profile
 #
-# This is the ohmyzsh module. It creates a profile directory under user home and allows
-# custom scripts to setup and made avalible on the path.
+# @summary Configure the ZSH profile for an user
 #
-# This module is called ohmyzsh as Puppet does not support hyphens in module
-# names.
 #
-# oh-my-zsh is a community-driven framework for managing your zsh configuration.
-#
-# === Parameters
-#
-# scripts: (array) An array of paths to all the scripts
+# @param scripts A hash of name => paths to all the scripts.
 #
 define ohmyzsh::profile (
-  Hash $scripts = {},
+  Hash[String[1], Stdlib::Filesource] $scripts = {},
 ) {
   include ohmyzsh
 
