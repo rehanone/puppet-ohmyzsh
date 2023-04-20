@@ -31,7 +31,7 @@ define ohmyzsh::install::concat (
 
   concat::fragment { "${home}/.zshrc:000-header":
     target  => "${home}/.zshrc",
-    content => "puppet:///modules/${module_name}/concat/zshrc-000-header.zsh-template",
+    source => "puppet:///modules/${module_name}/concat/zshrc-000-header.zsh-template",
     order   => '000',
   }
 
