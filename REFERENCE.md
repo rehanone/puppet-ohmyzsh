@@ -10,11 +10,18 @@
 
 ### Defined types
 
+#### Public Defined types
+
 * [`ohmyzsh::fetch::theme`](#ohmyzshfetchtheme): Install a theme from a defined source
 * [`ohmyzsh::install`](#ohmyzshinstall): Install and configure Oh-My-ZSH for an user
 * [`ohmyzsh::plugins`](#ohmyzshplugins): Install and configure Oh-My-ZSH plugins for an user
 * [`ohmyzsh::profile`](#ohmyzshprofile): Configure the ZSH profile for an user
 * [`ohmyzsh::theme`](#ohmyzshtheme): Configure the ZSH theme for an user
+
+#### Private Defined types
+
+* `ohmyzsh::install::classic`: Manage the zsh file with the original mode (file copy from the repository)
+* `ohmyzsh::install::concat`: Manage the zsh file with concat
 
 ## Classes
 
@@ -39,6 +46,7 @@ The following parameters are available in the `ohmyzsh` class:
 * [`themes`](#themes)
 * [`plugins`](#plugins)
 * [`profiles`](#profiles)
+* [`concat`](#concat)
 
 ##### <a name="source"></a>`source`
 
@@ -81,6 +89,12 @@ Configure the plugins for users defined in this hash. See data/ for the default 
 Data type: `Hash`
 
 Configure the profile for users defined in this hash. See data/ for the default value.
+
+##### <a name="concat"></a>`concat`
+
+Data type: `Boolean`
+
+Use the concat module to manage .zshrc files.
 
 ## Defined types
 

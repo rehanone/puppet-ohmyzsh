@@ -28,15 +28,25 @@ define ohmyzsh::profile (
     owner   => $name,
     require => User[$name],
   }
-  -> file_line { "${home}-profile":
-    ensure  => present,
-    line    => 'for f in ~/profile/*; do source "$f"; done',
-    match   => 'for f in ~/profile/*; do source "$f"; done',
-    path    => $shell_resource_path,
-    require => [
-      User[$name],
-      Ohmyzsh::Install[$name],
-    ],
+
+  unless $ohmyzsh::concat {
+    file_line { "${home}-profile":
+      ensure  => present,
+      line    => 'for f in ~/profile/*; do source "$f"; done',
+      match   => 'for f in ~/profile/*; do source "$f"; done',
+      path    => $shell_resource_path,
+      require => [
+        User[$name],
+        Ohmyzsh::Install[$name],
+      ],
+    }
+  } else {
+    concat::fragment { "${home}/.zshrc:profile":
+      target  => "${home}/.zshrc",
+      content => "for f in ~/profile/*; do source \"\$f\"; done\n",
+      order   => '080',
+      require => Ohmyzsh::Install[$name],
+    }
   }
 
   $scripts.each |$script_name, $script_path| {

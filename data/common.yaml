@@ -7,3 +7,4 @@ ohmyzsh::installs: {}
 ohmyzsh::themes: {}
 ohmyzsh::plugins: {}
 ohmyzsh::profiles: {}
+ohmyzsh::concat: false

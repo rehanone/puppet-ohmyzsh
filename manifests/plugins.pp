@@ -53,10 +53,19 @@ define ohmyzsh::plugins (
 
   $plugins_real = join($all_plugins, ' ')
 
-  file_line { "${name}-${plugins_real}-install":
-    path    => "${home}/.zshrc",
-    line    => "plugins=(${plugins_real})",
-    match   => '^plugins=',
-    require => Ohmyzsh::Install[$name],
+  unless $ohmyzsh::concat {
+    file_line { "${name}-${plugins_real}-install":
+      path    => "${home}/.zshrc",
+      line    => "plugins=(${plugins_real})",
+      match   => '^plugins=',
+      require => Ohmyzsh::Install[$name],
+    }
+  } else {
+    concat::fragment { "${home}/.zshrc:plugins":
+      target  => "${home}/.zshrc",
+      content => "plugins=(${plugins_real})\n",
+      order   => '060',
+      require => Ohmyzsh::Install[$name],
+    }
   }
 }

@@ -24,10 +24,19 @@ define ohmyzsh::theme (
     $group = $name
   }
 
-  file_line { "${name}-${theme}-install":
-    path    => "${home}/.zshrc",
-    line    => "ZSH_THEME=\"${theme}\"",
-    match   => '^ZSH_THEME',
-    require => Ohmyzsh::Install[$name],
+  unless $ohmyzsh::concat {
+    file_line { "${name}-${theme}-install":
+      path    => "${home}/.zshrc",
+      line    => "ZSH_THEME=\"${theme}\"",
+      match   => '^ZSH_THEME',
+      require => Ohmyzsh::Install[$name],
+    }
+  } else {
+    concat::fragment { "${home}/.zshrc:ZSH_THEME":
+      target  => "${home}/.zshrc",
+      content => "ZSH_THEME=\"${theme}\"\n",
+      order   => '020',
+      require => Ohmyzsh::Install[$name],
+    }
   }
 }

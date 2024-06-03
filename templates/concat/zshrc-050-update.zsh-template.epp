@@ -1,0 +1,7 @@
+<%- |
+    Enum[auto, disabled, reminder] $auto_update_mode,
+    Integer[0]                     $auto_update_frequency,
+| -%>
+### Puppet Concat: zshrc-050-update.zsh-template.epp
+zstyle ':omz:update' mode <%= $auto_update_mode %>
+zstyle ':omz:update' frequency <%= $auto_update_frequency %>
