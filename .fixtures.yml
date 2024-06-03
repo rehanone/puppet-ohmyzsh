@@ -4,6 +4,7 @@ fixtures:
       repo: "puppetlabs/stdlib"
     vcsrepo:
       repo: "puppetlabs/vcsrepo"
+      ref: "5.5.0"
   repositories:
     wget: "https://github.com/rehanone/puppet-wget.git"
   symlinks:

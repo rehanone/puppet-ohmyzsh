@@ -1,3 +1,19 @@
+#
+# @summary Install a theme from a defined source
+#
+#
+# @param url      The URL of the git repository (if `source` is `git`) or to the file
+# @param source   `git` for a repository, `undef` for a file to download or the source to pass to Puppet `file`
+# @param content  The content to pass to Puppet `file`, only if `source` and `url` is unset.
+# @param filename The file name to use while saving the theme
+# @param revision Revision to checkout while using Git
+# @param depth    Controls the shallow clone for Git
+#
+#
+# @author Leon Brocard <acme@astray.com>
+# @author Zan Loy <zan.loy@gmail.com>
+# @author Rehan Mahmood <rehanone at gmail dot com>
+#
 define ohmyzsh::fetch::theme (
   Optional[Stdlib::Httpurl] $url      = undef,
   Optional[String]          $source   = undef,

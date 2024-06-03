@@ -1,25 +1,13 @@
-# == Define: ohmyzsh::plugins
 #
-# This is the ohmyzsh module. It installs oh-my-zsh for a user and changes
-# their shell to zsh. It has been tested under Ubuntu.
+# @summary Install and configure Oh-My-ZSH plugins for an user
 #
-# This module is called ohmyzsh as Puppet does not support hyphens in module
-# names.
 #
-# oh-my-zsh is a community-driven framework for managing your zsh configuration.
+# @param plugins        List of built-in plugins.
+# @param custom_plugins List of plugins to install and use.
 #
-# === Parameters
 #
-# plugins: (string) space separated list of tmux plugins
-#
-# === Authors
-#
-# Leon Brocard <acme@astray.com>
-# Zan Loy <zan.loy@gmail.com>
-#
-# === Copyright
-#
-# Copyright 2014
+# @author Leon Brocard <acme@astray.com>
+# @author Zan Loy <zan.loy@gmail.com>
 #
 define ohmyzsh::plugins (
   Array[String] $plugins        = ['git'],

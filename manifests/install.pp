@@ -1,29 +1,18 @@
-# == Define: ohmyzsh::install
 #
-# This is the ohmyzsh module. It installs oh-my-zsh for a user and changes
-# their shell to zsh. It has been tested under Ubuntu.
+# @summary Install and configure Oh-My-ZSH for an user
 #
-# This module is called ohmyzsh as Puppet does not support hyphens in module
-# names.
 #
-# oh-my-zsh is a community-driven framework for managing your zsh configuration.
+# @param ensure                Controls the way the Oh-My-ZSH repository is managed by Puppet.
+# @param set_sh                Controls whether to change the user shell to zsh.
+# @param update_zshrc          Controls the update of .zshrc from the upstream template.
+# @param backup_zshrc          Controls if a backup of .zshrc need to be sone before changes.
+# @param auto_update_mode      Controls the update check for oh-my-zsh.
+# @param auto_update_frequency Controls the update check frequency.
 #
-# === Parameters
 #
-# set_sh: (boolean) controls whether to change the user shell to zsh
-# update_zshrc: (enum) controls the update of .zshrc from the upstream template. Default value is `disabled`
-# auto_update_mode: (enum) controls the update check for oh-my-zsh. Default value is `disabled`.
-# auto_update_frequency: (integer) controls the update check frequency. Default value is `14`.
-#
-# === Authors
-#
-# Leon Brocard <acme@astray.com>
-# Zan Loy <zan.loy@gmail.com>
-# Rehan Mahmood
-#
-# === Copyright
-#
-# Copyright 2022
+# @author Leon Brocard <acme@astray.com>
+# @author Zan Loy <zan.loy@gmail.com>
+# @author Rehan Mahmood
 #
 define ohmyzsh::install (
   Enum[present, latest] $ensure     = latest,
